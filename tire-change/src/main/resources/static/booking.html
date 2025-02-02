@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Бронирование шиномонтажа</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    label, input, button { display: block; margin-top: 10px; }
+    button { padding: 10px; background-color: #007BFF; color: white; border: none; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+  </style>
+</head>
+<body>
+<h2>Подтверждение бронирования</h2>
+<p>Город: <span id="city"></span></p>
+<p>Слот ID: <span id="slotId"></span></p>
+
+<label>Введите контактный телефон:</label>
+<input type="text" id="contactInfo">
+<button onclick="confirmBooking()">Подтвердить</button>
+
+<script>
+  // Получаем параметры из URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const city = urlParams.get('city');
+  const id = urlParams.get('id');
+
+  document.getElementById("city").textContent = city;
+  document.getElementById("slotId").textContent = id;
+
+  async function confirmBooking() {
+    const contactInfo = document.getElementById("contactInfo").value;
+    if (!contactInfo) {
+      alert("Введите номер телефона!");
+      return;
+    }
+
+    const response = await fetch("/api/tire-change/book", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ city, id, contact: contactInfo })
+    });
+
+    if (response.ok) {
+      alert("Бронирование подтверждено!");
+      window.location.href = "index.html";  // Вернуться на главную
+    } else {
+      alert("Ошибка бронирования! Попробуйте снова.");
+    }
+  }
+</script>
+</body>
+</html>

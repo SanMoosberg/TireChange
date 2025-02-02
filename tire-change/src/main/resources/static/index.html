@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Резервирование шиномонтажа</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        button { padding: 8px 12px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+<h2>Выберите мастерскую и дату</h2>
+<label>Город:</label>
+<select id="city">
+    <option value="London">London</option>
+    <option value="Manchester">Manchester</option>
+</select>
+
+<label>С:</label>
+<input type="date" id="fromDate">
+<label>До:</label>
+<input type="date" id="untilDate">
+<button onclick="loadSlots()">Показать доступные слоты</button>
+
+<h3>Доступные слоты:</h3>
+<table>
+    <thead>
+    <tr>
+        <th>Дата и время</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody id="slotsTable"></tbody>
+</table>
+
+<script>
+    async function loadSlots() {
+        const city = document.getElementById("city").value;
+        const from = document.getElementById("fromDate").value;
+        const until = document.getElementById("untilDate").value;
+
+        if (!city || !from || !until) {
+            alert("Выберите город и даты!");
+            return;
+        }
+
+        const response = await fetch(`/api/tire-change/available?city=${city}&from=${from}&until=${until}`);
+        const slots = await response.json();
+
+        const table = document.getElementById("slotsTable");
+        table.innerHTML = ""; // Очищаем таблицу перед загрузкой новых данных
+
+        slots.forEach(slot => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                    <td>${slot.time}</td>
+                    <td><button onclick="bookSlot('${city}', '${slot.id}')">Забронировать</button></td>
+                `;
+            table.appendChild(row);
+        });
+    }
+
+    function bookSlot(city, id) {
+        window.location.href = `booking.html?city=${city}&id=${id}`;
+    }
+</script>
+</body>
+</html>
