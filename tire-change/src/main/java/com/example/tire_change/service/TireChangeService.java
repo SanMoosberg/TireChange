@@ -21,7 +21,6 @@ public class TireChangeService {
         this.tireShopConfig = tireShopConfig;
     }
 
-    // Доступные времена
     public Mono<List<TireChangeTime>> getAvailableTimes(String city, String from, String until) {
         TireShopConfig.TireShop shop = getShopByCity(city);
 
@@ -35,7 +34,7 @@ public class TireChangeService {
                 .map(response -> response.toList());
     }
 
-        // Бронирование времени
+
     public Mono<String> bookTireChange(String city, String id, String contactInfo) {
         TireShopConfig.TireShop shop = getShopByCity(city);
 
@@ -52,7 +51,7 @@ public class TireChangeService {
                 .bodyToMono(String.class);
     }
 
-    // Мастерская по названию города
+
     private TireShopConfig.TireShop getShopByCity(String city) {
 
         return tireShopConfig.getShops().stream()
@@ -61,7 +60,6 @@ public class TireChangeService {
                 .orElseThrow(() -> new IllegalArgumentException("Unknown city"));
     }
 
-    // Определения типа контента - JSON или XML
     private MediaType getMediaType(TireShopConfig.TireShop shop) {
         return shop.getFormat().equalsIgnoreCase("xml") ? MediaType.APPLICATION_XML : MediaType.APPLICATION_JSON;
     }

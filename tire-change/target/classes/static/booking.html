@@ -16,11 +16,12 @@
 <p>Город: <span id="city"></span></p>
 <p>Слот ID: <span id="slotId"></span></p>
 
-<label>Введите контактный данные</label>
+<label>Введите контактный телефон:</label>
 <input type="text" id="contactInfo">
 <button onclick="confirmBooking()">Подтвердить</button>
 
 <script>
+  // Получаем параметры из URL
   const urlParams = new URLSearchParams(window.location.search);
   const city = urlParams.get('city');
   const id = urlParams.get('id');
@@ -31,7 +32,7 @@
   async function confirmBooking() {
     const contactInfo = document.getElementById("contactInfo").value;
     if (!contactInfo) {
-      alert("Введите контактные данные!");
+      alert("Введите номер телефона!");
       return;
     }
 

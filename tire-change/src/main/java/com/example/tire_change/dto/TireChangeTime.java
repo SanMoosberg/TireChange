@@ -19,7 +19,6 @@ public class TireChangeTime {
     @JsonProperty("vehicleType")
     private String vehicleType;
 
-    // Геттеры и сеттеры вручную
     public String getId() {
         return id;
     }
@@ -44,14 +43,12 @@ public class TireChangeTime {
         this.vehicleType = vehicleType;
     }
 
-    // Класс для XML ответа
     @XmlRootElement(name = "tireChangeTimesResponse")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class XmlResponse {
         @XmlElement(name = "availableTime")
         private List<TireChangeTime> tireChangeTimes;
 
-        // Геттер и сеттер вручную
         public List<TireChangeTime> getTireChangeTimes() {
             return tireChangeTimes;
         }
@@ -65,7 +62,6 @@ public class TireChangeTime {
         }
     }
 
-    // Класс для бронирования
     public static class BookingRequest {
         private String contactInformation;
 
@@ -73,7 +69,6 @@ public class TireChangeTime {
             this.contactInformation = contactInformation;
         }
 
-        // Геттер и сеттер вручную
         public String getContactInformation() {
             return contactInformation;
         }

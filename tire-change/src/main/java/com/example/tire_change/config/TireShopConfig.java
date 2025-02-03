@@ -10,7 +10,6 @@ public class TireShopConfig {
 
     private List<TireShop> shops;
 
-    // Геттер и сеттер для поля shops
     public List<TireShop> getShops() {
         return shops;
     }
@@ -27,7 +26,7 @@ public class TireShopConfig {
         private String format;
         private List<String> vehicleTypes;
 
-        // Геттер и сеттер для name
+
         public String getName() {
             return name;
         }
@@ -35,7 +34,7 @@ public class TireShopConfig {
             this.name = name;
         }
 
-        // Геттер и сеттер для baseUrl
+
         public String getBaseUrl() {
             return baseUrl;
         }
@@ -43,7 +42,6 @@ public class TireShopConfig {
             this.baseUrl = baseUrl;
         }
 
-        // Геттер и сеттер для timeEndpoint
         public String getTimeEndpoint() {
             return timeEndpoint;
         }
@@ -51,7 +49,6 @@ public class TireShopConfig {
             this.timeEndpoint = timeEndpoint;
         }
 
-        // Геттер и сеттер для bookingEndpoint
         public String getBookingEndpoint() {
             return bookingEndpoint;
         }
@@ -59,7 +56,6 @@ public class TireShopConfig {
             this.bookingEndpoint = bookingEndpoint;
         }
 
-        // Геттер и сеттер для format
         public String getFormat() {
             return format;
         }
@@ -67,7 +63,6 @@ public class TireShopConfig {
             this.format = format;
         }
 
-        // Геттер и сеттер для vehicleTypes
         public List<String> getVehicleTypes() {
             return vehicleTypes;
         }
