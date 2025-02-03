@@ -10,6 +10,7 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TireChangeTime {
+
     @JsonProperty("id")
     private String id;
 
@@ -46,6 +47,7 @@ public class TireChangeTime {
     @XmlRootElement(name = "tireChangeTimesResponse")
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class XmlResponse {
+
         @XmlElement(name = "availableTime")
         private List<TireChangeTime> tireChangeTimes;
 
@@ -59,6 +61,24 @@ public class TireChangeTime {
 
         public List<TireChangeTime> toList() {
             return tireChangeTimes;
+        }
+    }
+
+    // Изменен класс для обработки JSON, теперь это просто список
+    public static class JsonResponse {
+        private List<TireChangeTime> availableTimes;
+
+
+        public List<TireChangeTime> getAvailableTimes() {
+            return availableTimes;
+        }
+
+        public void setAvailableTimes(List<TireChangeTime> availableTimes) {
+            this.availableTimes = availableTimes;
+        }
+
+        public List<TireChangeTime> toList() {
+            return availableTimes;
         }
     }
 

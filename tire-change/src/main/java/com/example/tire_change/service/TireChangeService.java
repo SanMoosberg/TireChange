@@ -3,6 +3,7 @@ import com.example.tire_change.config.TireShopConfig;
 import com.example.tire_change.dto.TireChangeTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -23,16 +24,34 @@ public class TireChangeService {
 
     public Mono<List<TireChangeTime>> getAvailableTimes(String city, String from, String until) {
         TireShopConfig.TireShop shop = getShopByCity(city);
-
         MediaType mediaType = getMediaType(shop);
 
+        if (shop.getFormat().equalsIgnoreCase("xml")) {
+            return getAvailableTimesForXml(shop, from, until);
+        } else {
+            return getAvailableTimesForJson(shop, from, until);
+        }
+    }
+
+    private Mono<List<TireChangeTime>> getAvailableTimesForXml(TireShopConfig.TireShop shop, String from, String until) {
         return webClient.get()
                 .uri(shop.getBaseUrl() + shop.getTimeEndpoint() + "?from=" + from + "&until=" + until)
-                .accept(mediaType)
+                .accept(MediaType.APPLICATION_XML)
                 .retrieve()
                 .bodyToMono(TireChangeTime.XmlResponse.class)
                 .map(response -> response.toList());
     }
+
+    private Mono<List<TireChangeTime>> getAvailableTimesForJson(TireShopConfig.TireShop shop, String from, String until) {
+        return webClient.get()
+                .uri(shop.getBaseUrl() + shop.getTimeEndpoint() + "?from=" + from + "&until=" + until)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<TireChangeTime>>() {
+                }) // Десериализация в список
+                .map(response -> response); // Возвращаем список
+    }
+
 
 
     public Mono<String> bookTireChange(String city, String id, String contactInfo) {
