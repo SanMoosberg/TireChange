@@ -81,20 +81,35 @@ public class TireChangeTime {
             return availableTimes;
         }
     }
-
+    @XmlRootElement(name = "BookingRequest")
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class BookingRequest {
+        @XmlElement(name = "city")
+        private String city;
+        @XmlElement(name = "id")
+        private String id;
+        @XmlElement(name = "contactInformation")
         private String contactInformation;
+
+        public BookingRequest() {}
+
+        public BookingRequest(String city, String id, String contactInformation) {
+            this.city = city;
+            this.id = id;
+            this.contactInformation = contactInformation;
+        }
 
         public BookingRequest(String contactInformation) {
             this.contactInformation = contactInformation;
         }
 
-        public String getContactInformation() {
-            return contactInformation;
-        }
+        public String getCity() { return city; }
+        public void setCity(String city) { this.city = city; }
 
-        public void setContactInformation(String contactInformation) {
-            this.contactInformation = contactInformation;
-        }
+        public String getId() { return id; }
+        public void setId(String id) { this.id = id; }
+
+        public String getContactInformation() { return contactInformation; }
+        public void setContactInformation(String contactInformation) { this.contactInformation = contactInformation; }
     }
 }

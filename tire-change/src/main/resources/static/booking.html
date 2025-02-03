@@ -35,10 +35,16 @@
       return;
     }
 
+    const requestData = {
+      city: city,
+      id: id,
+      contactInformation: contactInfo
+    };
+
     const response = await fetch("/api/tire-change/book", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ city, id, contact: contactInfo })
+      body: JSON.stringify(requestData)
     });
 
     if (response.ok) {
