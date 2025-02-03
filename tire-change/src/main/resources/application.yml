@@ -1,14 +1,18 @@
 tire-shops:
-  - name: "Manchester"
-    baseUrl: "http://localhost:9003/api/v2"
-    timeEndpoint: "/tire-change-times"
-    bookingEndpoint: "/tire-change-times/{id}/booking"
-    format: "json"
-    carTypes: ["Sõiduauto", "Veoauto"]
+  shops:
+    - name: "Manchester"
+      baseUrl: "http://localhost:9003/api/v2"
+      timeEndpoint: "/tire-change-times"
+      bookingEndpoint: "/tire-change-times/{id}/booking"
+      format: "json"
+      vehicleTypes: ["Sõiduauto", "Veoauto"]
 
-  - name: "London"
-    baseUrl: "http://localhost:9004/api/v1"
-    timeEndpoint: "/tire-change-times/available"
-    bookingEndpoint: "/tire-change-times/{uuid}/booking"
-    format: "xml"
-    carTypes: ["Sõiduauto"]
+    - name: "London"
+      baseUrl: "http://localhost:9004/api/v1"
+      timeEndpoint: "/tire-change-times/available"
+      bookingEndpoint: "/tire-change-times/{uuid}/booking"
+      format: "xml"
+      vehicleTypes: ["Sõiduauto"]
+logging:
+  level:
+    org.springframework.web: DEBUG

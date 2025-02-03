@@ -1,9 +1,8 @@
-package service;
-
-
-import config.TireShopConfig;
-import dto.TireChangeTime;
+package com.example.tire_change.service;
+import com.example.tire_change.config.TireShopConfig;
+import com.example.tire_change.dto.TireChangeTime;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -12,10 +11,15 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class TireChangeService {
     private final WebClient webClient;
     private final TireShopConfig tireShopConfig;
+
+    @Autowired
+    public TireChangeService(WebClient webClient, TireShopConfig tireShopConfig) {
+        this.webClient = webClient;
+        this.tireShopConfig = tireShopConfig;
+    }
 
     // Доступные времена
     public Mono<List<TireChangeTime>> getAvailableTimes(String city, String from, String until) {
@@ -26,12 +30,12 @@ public class TireChangeService {
         return webClient.get()
                 .uri(shop.getBaseUrl() + shop.getTimeEndpoint() + "?from=" + from + "&until=" + until)
                 .accept(mediaType)
-                .exchangeToMono(response -> mediaType == MediaType.APPLICATION_XML
-                        ? response.bodyToMono(TireChangeTime.XmlResponse.class).map(TireChangeTime.XmlResponse::toList)
-                        : response.bodyToMono(TireChangeTime[].class).map(List::of));
+                .retrieve()
+                .bodyToMono(TireChangeTime.XmlResponse.class)
+                .map(response -> response.toList());
     }
 
-    // Бронирование времени
+        // Бронирование времени
     public Mono<String> bookTireChange(String city, String id, String contactInfo) {
         TireShopConfig.TireShop shop = getShopByCity(city);
 
@@ -50,6 +54,7 @@ public class TireChangeService {
 
     // Мастерская по названию города
     private TireShopConfig.TireShop getShopByCity(String city) {
+
         return tireShopConfig.getShops().stream()
                 .filter(s -> s.getName().equalsIgnoreCase(city))
                 .findFirst()
