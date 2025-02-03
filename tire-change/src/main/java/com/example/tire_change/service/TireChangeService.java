@@ -48,8 +48,8 @@ public class TireChangeService {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(new ParameterizedTypeReference<List<TireChangeTime>>() {
-                }) // Десериализация в список
-                .map(response -> response); // Возвращаем список
+                })
+                .map(response -> response);
     }
 
 

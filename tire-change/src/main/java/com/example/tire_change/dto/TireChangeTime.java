@@ -64,7 +64,7 @@ public class TireChangeTime {
         }
     }
 
-    // Изменен класс для обработки JSON, теперь это просто список
+
     public static class JsonResponse {
         private List<TireChangeTime> availableTimes;
 
