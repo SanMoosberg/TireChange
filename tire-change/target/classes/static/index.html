@@ -52,7 +52,7 @@
         const slots = await response.json();
 
         const table = document.getElementById("slotsTable");
-        table.innerHTML = ""; // Очищаем таблицу перед загрузкой новых данных
+        table.innerHTML = "";
 
         slots.forEach(slot => {
             const row = document.createElement("tr");

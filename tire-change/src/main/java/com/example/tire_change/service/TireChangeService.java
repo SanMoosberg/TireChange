@@ -36,8 +36,12 @@ public class TireChangeService {
 
 
     public Mono<String> bookTireChange(String city, String id, String contactInfo) {
+        System.out.println("Book tire change called");
+        System.out.println("city: " + city);
+        System.out.println("id: " + id);
+        System.out.println("contactInfo: " + contactInfo);
         TireShopConfig.TireShop shop = getShopByCity(city);
-
+        System.out.println("shop: " + shop);
         MediaType mediaType = getMediaType(shop);
         HttpMethod httpMethod = shop.getFormat().equalsIgnoreCase("xml") ? HttpMethod.PUT : HttpMethod.POST;
 
